@@ -24,9 +24,9 @@ service cloud.firestore {
     }
 
     match /skills/{document} {
-      allow create: if request.auth != null;
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
+      allow create: if true;
+      allow read: if true;
+      allow write: if false;
       allow delete: if false;
     }
 
@@ -38,52 +38,52 @@ service cloud.firestore {
     }
 
     match /requests/{document} {
-      allow create: if request.auth != null;
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
-      allow delete: if false;
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
     }
 
     match /service-providers/{document} {
-      allow create: if request.auth != null;
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
-      allow delete: if false;
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
     }
 
     match /requests/{parent}/destination/{document} {
-      allow create: if request.auth != null;
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
-      allow delete: if false;
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
     }
 
     match /{path=**}/destination/{document} {
-      allow read: if request.auth != null;
+      allow read: if true;
     }
 
 
     match /requests/{parent}/distance/{document} {
-      allow create: if request.auth != null;
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
-      allow delete: if false;
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
     }
 
     match /{path=**}/distance/{document} {
-      allow read: if request.auth != null;
+      allow read: if true;
     }
 
 
     match /requests/{parent}/position/{document} {
-      allow create: if request.auth != null;
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
-      allow delete: if false;
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
     }
 
     match /{path=**}/position/{document} {
-      allow read: if request.auth != null;
+      allow read: if true;
     }
 
   }

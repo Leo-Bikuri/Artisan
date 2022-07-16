@@ -89,7 +89,7 @@ class _$DestinationRecord extends DestinationRecord {
 
   factory _$DestinationRecord(
           [void Function(DestinationRecordBuilder) updates]) =>
-      (new DestinationRecordBuilder()..update(updates))._build();
+      (new DestinationRecordBuilder()..update(updates)).build();
 
   _$DestinationRecord._({this.address, this.location, this.reference})
       : super._();
@@ -119,7 +119,7 @@ class _$DestinationRecord extends DestinationRecord {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'DestinationRecord')
+    return (newBuiltValueToStringHelper('DestinationRecord')
           ..add('address', address)
           ..add('location', location)
           ..add('reference', reference))
@@ -171,9 +171,7 @@ class DestinationRecordBuilder
   }
 
   @override
-  DestinationRecord build() => _build();
-
-  _$DestinationRecord _build() {
+  _$DestinationRecord build() {
     final _$result = _$v ??
         new _$DestinationRecord._(
             address: address, location: location, reference: reference);
@@ -182,4 +180,4 @@ class DestinationRecordBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

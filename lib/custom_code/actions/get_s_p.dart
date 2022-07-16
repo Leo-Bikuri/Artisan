@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 import 'package:firebase_core/firebase_core.dart';
 
-Future<List<String>> getSP(LatLng userLocation) async {
+Future<List<dynamic>> getSP(LatLng userLocation) async {
   // Add your function code here!
   CollectionReference service_providers =
       FirebaseFirestore.instance.collection('service-providers');

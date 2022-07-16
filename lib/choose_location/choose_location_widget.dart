@@ -32,7 +32,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
-  List<String> serviceProviders;
+  List<dynamic> serviceProviders;
   RequestsRecord requestDocument;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;

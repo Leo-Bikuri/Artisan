@@ -153,18 +153,21 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ],
                         ),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Click on the type of job you need done at your \nhome',
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ],
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Click on the type of job you need done \nat your home',
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
+                          ],
+                        ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 20, 10, 0),
                         child: InkWell(
                           onTap: () async {
                             await Navigator.push(

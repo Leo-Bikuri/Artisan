@@ -293,6 +293,7 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .tertiaryColor,
+                                                  fontSize: 15,
                                                 ),
                                           ),
                                         ),
