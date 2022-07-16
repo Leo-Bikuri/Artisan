@@ -9,7 +9,12 @@ part of 'serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ChatMessagesRecord.serializer)
       ..add(ChatsRecord.serializer)
+      ..add(DestinationRecord.serializer)
+      ..add(DistanceRecord.serializer)
       ..add(JobRecord.serializer)
+      ..add(PositionRecord.serializer)
+      ..add(RequestsRecord.serializer)
+      ..add(ServiceProvidersRecord.serializer)
       ..add(SkillsRecord.serializer)
       ..add(UsersRecord.serializer)
       ..addBuilderFactory(

@@ -36,5 +36,55 @@ service cloud.firestore {
       allow write: if request.auth.uid == parent;
       allow delete: if false;
     }
+
+    match /requests/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /service-providers/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /requests/{parent}/destination/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/destination/{document} {
+      allow read: if true;
+    }
+
+
+    match /requests/{parent}/distance/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/distance/{document} {
+      allow read: if true;
+    }
+
+
+    match /requests/{parent}/position/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/position/{document} {
+      allow read: if true;
+    }
+
   }
 }

@@ -1,3 +1,5 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_place_picker.dart';
@@ -7,6 +9,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/lat_lng.dart';
 import '../flutter_flow/place.dart';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,6 +31,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
+  RequestsRecord requesttDocument;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
 
@@ -192,8 +196,31 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                             if ((placePickerValue.name != null &&
                                 placePickerValue.name != ''))
                               FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
+                                onPressed: () async {
+                                  final requestsCreateData =
+                                      createRequestsRecordData(
+                                    userId: currentUserReference,
+                                    status: 'Pending',
+                                  );
+                                  var requestsRecordReference =
+                                      RequestsRecord.collection.doc();
+                                  await requestsRecordReference
+                                      .set(requestsCreateData);
+                                  requesttDocument =
+                                      RequestsRecord.getDocumentFromData(
+                                          requestsCreateData,
+                                          requestsRecordReference);
+
+                                  final destinationCreateData =
+                                      createDestinationRecordData(
+                                    location: placePickerValue.latLng,
+                                    address: placePickerValue.name,
+                                  );
+                                  await DestinationRecord.createDoc(
+                                          requesttDocument.reference)
+                                      .set(destinationCreateData);
+
+                                  setState(() {});
                                 },
                                 text: 'Confirm',
                                 options: FFButtonOptions(
