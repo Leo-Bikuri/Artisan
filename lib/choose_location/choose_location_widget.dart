@@ -9,6 +9,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/lat_lng.dart';
 import '../flutter_flow/place.dart';
 import 'dart:io';
+import '../custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,6 +32,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
+  List<String> serviceProviders;
   RequestsRecord requesttDocument;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
@@ -219,6 +221,9 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                   await DestinationRecord.createDoc(
                                           requesttDocument.reference)
                                       .set(destinationCreateData);
+                                  serviceProviders = await actions.getSP(
+                                    currentUserDocument?.location,
+                                  );
 
                                   setState(() {});
                                 },
