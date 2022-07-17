@@ -22,18 +22,7 @@ Future<String> getSP(
 
   double userLat = userLocation.latitude;
   double userLng = userLocation.longitude;
-  String spId = '';
-
-  allData.forEach((item) {
-    if (item['skill'] == skill) {
-      double spLat = item['location'].latitude;
-      double spLng = item['location'].longitude;
-      double distance = calculateDistance(userLat, userLng, spLat, spLng);
-      if (distance < 20) {
-        spId = item['uid'];
-      }
-    }
-  });
+  String spId = getServiceProvider(allData, skill, userLat, userLng);
 
   return spId;
 }

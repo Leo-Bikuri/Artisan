@@ -189,8 +189,6 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       currentUserDocument?.location,
                                       widget.skillType,
                                     );
-                                    print(serviceProviders);
-
                                     setState(() {});
                                   },
                                   text: 'Confirm',

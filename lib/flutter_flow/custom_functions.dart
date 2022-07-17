@@ -36,3 +36,22 @@ double calculateDistance(
 
   return distance;
 }
+
+String getServiceProvider(
+  List<dynamic> serviceProviders,
+  String skill,
+  double userLat,
+  double userLng,
+) {
+  serviceProviders.forEach((item) {
+    if (item['skill'] == skill) {
+      double spLat = item['location'].latitude;
+      double spLng = item['location'].longitude;
+      double distance = calculateDistance(userLat, userLng, spLat, spLng);
+      if (distance > 1) {
+        return item['uid'];
+      }
+    }
+  });
+  return null;
+}
