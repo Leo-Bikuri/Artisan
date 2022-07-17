@@ -22,6 +22,8 @@ Future<String> getSP(
 
   double userLat = userLocation.latitude;
   double userLng = userLocation.longitude;
+  print(userLat);
+  print(userLng);
   String spId = getServiceProvider(allData, skill, userLat, userLng);
 
   return spId;

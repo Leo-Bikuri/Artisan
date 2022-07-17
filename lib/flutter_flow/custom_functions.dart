@@ -47,6 +47,8 @@ String getServiceProvider(
     if (item['skill'] == skill) {
       double spLat = item['location'].latitude;
       double spLng = item['location'].longitude;
+      print(spLat);
+      print(spLng);
       double distance = calculateDistance(userLat, userLng, spLat, spLng);
       if (distance > 1) {
         return item['uid'];
