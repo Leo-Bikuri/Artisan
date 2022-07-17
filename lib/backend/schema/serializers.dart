@@ -1,8 +1,6 @@
 import 'package:built_value/standard_json_plugin.dart';
 
 import 'users_record.dart';
-import 'chats_record.dart';
-import 'chat_messages_record.dart';
 import 'skills_record.dart';
 import 'job_record.dart';
 import 'requests_record.dart';
@@ -22,8 +20,6 @@ const kDocumentReferenceField = 'Document__Reference__Field';
 
 @SerializersFor(const [
   UsersRecord,
-  ChatsRecord,
-  ChatMessagesRecord,
   SkillsRecord,
   JobRecord,
   RequestsRecord,

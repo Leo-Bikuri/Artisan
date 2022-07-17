@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 import 'package:firebase_core/firebase_core.dart';
 
-Future<DocumentReference> getSP(
+Future<ServiceProvidersRecord> getSP(
   LatLng userLocation,
   String skill,
 ) async {
@@ -22,8 +22,7 @@ Future<DocumentReference> getSP(
 
   double userLat = userLocation.latitude;
   double userLng = userLocation.longitude;
-  DocumentReference serviceProviderReference =
-      getServiceProvider(allData, skill, userLat, userLng);
+  var serviceProvider = getServiceProvider(allData, skill, userLat, userLng);
 
-  return serviceProviderReference;
+  return serviceProvider;
 }

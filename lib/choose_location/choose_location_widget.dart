@@ -30,11 +30,11 @@ class ChooseLocationWidget extends StatefulWidget {
 }
 
 class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
-  DocumentReference serviceProviders;
-  RequestsRecord requestDocument;
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
+  RequestsRecord requestDocument;
+  ServiceProvidersRecord serviceProviders;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
 
@@ -191,10 +191,11 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       widget.skillType,
                                     );
                                     triggerPushNotification(
-                                      notificationTitle: '',
-                                      notificationText: '',
-                                      userRefs: [],
-                                      initialPageName: '',
+                                      notificationTitle: 'Job request',
+                                      notificationText: currentUserDisplayName,
+                                      notificationSound: 'default',
+                                      userRefs: [requestDocument.userId],
+                                      initialPageName: 'home',
                                       parameterData: {},
                                     );
 
