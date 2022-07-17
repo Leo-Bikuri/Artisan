@@ -189,9 +189,6 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       currentUserDocument?.location,
                                       widget.skillType,
                                     );
-                                    serviceProviders.forEach((element) {
-                                      print(element['uid']);
-                                    });
 
                                     setState(() {});
                                   },
