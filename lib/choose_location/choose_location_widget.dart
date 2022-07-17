@@ -189,7 +189,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                             requestDocument.reference)
                                         .set(destinationCreateData);
                                     serviceProvider = await actions.getSP(
-                                      currentUserDocument?.location,
+                                      placePickerValue.latLng,
                                       widget.skillType,
                                     );
 
