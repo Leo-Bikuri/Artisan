@@ -21,17 +21,6 @@ Future<DocumentReference> getSP(
 
   double userLat = userLocation.latitude;
   double userLng = userLocation.longitude;
-  // allData.forEach((item) async {
-  //   if (item['skill'] == skill) {
-  //     double spLat = item['location'].latitude;
-  //     double spLng = item['location'].longitude;
-  //     double distance = calculateDistance(userLat, userLng, spLat, spLng);
-  //     if (distance > 1) {
-  //       serviceProviderRecordReference =
-  //           await ServiceProvidersRecord.collection.doc(item['uid']);
-  //     }
-  //   }
-  // });
   for (int i = 0; i < allData.length; i++) {
     if (allData[i]['skill'] == skill) {
       double spLat = allData[i]['location'].latitude;
@@ -45,7 +34,5 @@ Future<DocumentReference> getSP(
       ServiceProviderRecordReference = reference;
     }
   }
-  // print(await getServiceProvider(allData, skill, userLat, userLng));
-  // return await getServiceProvider(allData, skill, userLat, userLng);
   return ServiceProviderRecordReference;
 }
