@@ -37,21 +37,20 @@ double calculateDistance(
   return distance;
 }
 
-ServiceProvidersRecord getServiceProvider(
+DocumentReference<Map<String, dynamic>> getServiceProvider(
   List<dynamic> serviceProviders,
   String skill,
   double userLat,
   double userLng,
 ) {
+  FirebaseFirestore db = FirebaseFirestore.instance;
   serviceProviders.forEach((item) {
     if (item['skill'] == skill) {
       double spLat = item['location'].latitude;
       double spLng = item['location'].longitude;
       double distance = calculateDistance(userLat, userLng, spLat, spLng);
       if (distance > 1) {
-        DocumentReference docRef =
-            FirebaseFirestore.instance.doc('service-providers/' + item['uid']);
-        return docRef.get();
+        return ServiceProvidersRecord.collection.doc(item['uid']);
       }
     }
   });

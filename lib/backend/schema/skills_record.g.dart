@@ -99,7 +99,7 @@ class _$SkillsRecord extends SkillsRecord {
   final DocumentReference<Object> reference;
 
   factory _$SkillsRecord([void Function(SkillsRecordBuilder) updates]) =>
-      (new SkillsRecordBuilder()..update(updates)).build();
+      (new SkillsRecordBuilder()..update(updates))._build();
 
   _$SkillsRecord._({this.name, this.imageUrl, this.charge, this.reference})
       : super._();
@@ -130,7 +130,7 @@ class _$SkillsRecord extends SkillsRecord {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SkillsRecord')
+    return (newBuiltValueToStringHelper(r'SkillsRecord')
           ..add('name', name)
           ..add('imageUrl', imageUrl)
           ..add('charge', charge)
@@ -188,7 +188,9 @@ class SkillsRecordBuilder
   }
 
   @override
-  _$SkillsRecord build() {
+  SkillsRecord build() => _build();
+
+  _$SkillsRecord _build() {
     final _$result = _$v ??
         new _$SkillsRecord._(
             name: name,
@@ -200,4 +202,4 @@ class SkillsRecordBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

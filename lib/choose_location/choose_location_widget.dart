@@ -34,7 +34,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
   RequestsRecord requestDocument;
-  ServiceProvidersRecord serviceProviders;
+  ServiceProvidersRecord serviceProviderDocument;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
 
@@ -186,15 +186,17 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                     await DestinationRecord.createDoc(
                                             requestDocument.reference)
                                         .set(destinationCreateData);
-                                    serviceProviders = await actions.getSP(
+                                    DocumentReference serviceProviders =
+                                        await actions.getSP(
                                       currentUserDocument?.location,
                                       widget.skillType,
                                     );
+                                    print(serviceProviders);
                                     triggerPushNotification(
                                       notificationTitle: 'Job request',
                                       notificationText: currentUserDisplayName,
                                       notificationSound: 'default',
-                                      userRefs: [requestDocument.userId],
+                                      userRefs: [serviceProviders],
                                       initialPageName: 'home',
                                       parameterData: {},
                                     );
