@@ -11,6 +11,7 @@ import '../flutter_flow/lat_lng.dart';
 import '../flutter_flow/place.dart';
 import 'dart:io';
 import '../custom_code/actions/index.dart' as actions;
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,11 +31,11 @@ class ChooseLocationWidget extends StatefulWidget {
 }
 
 class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
+  DocumentReference serviceProvider;
+  RequestsRecord requestDocument;
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
-  RequestsRecord requestDocument;
-  ServiceProvidersRecord serviceProviders;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
 
@@ -186,13 +187,22 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                     await DestinationRecord.createDoc(
                                             requestDocument.reference)
                                         .set(destinationCreateData);
-                                    serviceProviders = await actions.getSP(
+                                    serviceProvider = await actions.getSP(
                                       currentUserDocument?.location,
                                       widget.skillType,
                                     );
+
+                                    final requestsUpdateData =
+                                        createRequestsRecordData(
+                                      spId: serviceProvider,
+                                    );
+                                    await requestDocument.reference
+                                        .update(requestsUpdateData);
                                     triggerPushNotification(
                                       notificationTitle: 'Job request',
-                                      notificationText: currentUserDisplayName,
+                                      notificationText:
+                                          functions.notificationText(
+                                              currentUserDisplayName),
                                       notificationSound: 'default',
                                       userRefs: [requestDocument.userId],
                                       initialPageName: 'home',

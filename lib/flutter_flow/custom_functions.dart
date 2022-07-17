@@ -37,23 +37,7 @@ double calculateDistance(
   return distance;
 }
 
-ServiceProvidersRecord getServiceProvider(
-  List<dynamic> serviceProviders,
-  String skill,
-  double userLat,
-  double userLng,
-) {
-  serviceProviders.forEach((item) {
-    if (item['skill'] == skill) {
-      double spLat = item['location'].latitude;
-      double spLng = item['location'].longitude;
-      double distance = calculateDistance(userLat, userLng, spLat, spLng);
-      if (distance > 1) {
-        DocumentReference docRef =
-            FirebaseFirestore.instance.doc('service-providers/' + item['uid']);
-        return docRef.get();
-      }
-    }
-  });
-  return null;
+String notificationText(String userName) {
+  // Add your function code here!
+  return 'Hello you have a new job request from $userName';
 }
