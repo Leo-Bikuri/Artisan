@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../backend/push_notifications/push_notifications_util.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_place_picker.dart';
@@ -29,11 +30,11 @@ class ChooseLocationWidget extends StatefulWidget {
 }
 
 class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
+  DocumentReference serviceProviders;
+  RequestsRecord requestDocument;
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
-  RequestsRecord requestDocument;
-  String serviceProviders;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
 
@@ -189,6 +190,14 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       currentUserDocument?.location,
                                       widget.skillType,
                                     );
+                                    triggerPushNotification(
+                                      notificationTitle: '',
+                                      notificationText: '',
+                                      userRefs: [],
+                                      initialPageName: '',
+                                      parameterData: {},
+                                    );
+
                                     setState(() {});
                                   },
                                   text: 'Confirm',

@@ -37,7 +37,7 @@ double calculateDistance(
   return distance;
 }
 
-String getServiceProvider(
+DocumentReference getServiceProvider(
   List<dynamic> serviceProviders,
   String skill,
   double userLat,
@@ -49,7 +49,9 @@ String getServiceProvider(
       double spLng = item['location'].longitude;
       double distance = calculateDistance(userLat, userLng, spLat, spLng);
       if (distance > 1) {
-        return item['uid'];
+        DocumentReference docRef =
+            FirebaseFirestore.instance.doc('service-providers/' + item['uid']);
+        return docRef;
       }
     }
   });
