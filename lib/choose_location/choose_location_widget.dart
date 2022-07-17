@@ -188,6 +188,9 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                     serviceProviders = await actions.getSP(
                                       currentUserDocument?.location,
                                     );
+                                    serviceProviders.forEach((element) {
+                                      print(element['uid']);
+                                    });
 
                                     setState(() {});
                                   },

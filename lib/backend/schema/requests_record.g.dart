@@ -120,7 +120,7 @@ class _$RequestsRecord extends RequestsRecord {
   final DocumentReference<Object> reference;
 
   factory _$RequestsRecord([void Function(RequestsRecordBuilder) updates]) =>
-      (new RequestsRecordBuilder()..update(updates)).build();
+      (new RequestsRecordBuilder()..update(updates))._build();
 
   _$RequestsRecord._(
       {this.spId, this.userId, this.status, this.username, this.reference})
@@ -155,7 +155,7 @@ class _$RequestsRecord extends RequestsRecord {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('RequestsRecord')
+    return (newBuiltValueToStringHelper(r'RequestsRecord')
           ..add('spId', spId)
           ..add('userId', userId)
           ..add('status', status)
@@ -219,7 +219,9 @@ class RequestsRecordBuilder
   }
 
   @override
-  _$RequestsRecord build() {
+  RequestsRecord build() => _build();
+
+  _$RequestsRecord _build() {
     final _$result = _$v ??
         new _$RequestsRecord._(
             spId: spId,
@@ -232,4 +234,4 @@ class RequestsRecordBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

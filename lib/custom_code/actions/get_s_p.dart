@@ -7,14 +7,32 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 import 'package:firebase_core/firebase_core.dart';
 
-Future<List<dynamic>> getSP(LatLng userLocation) async {
+Future<String> getSP(
+  LatLng userLocation,
+  String skill,
+) async {
   // Add your function code here!
-  CollectionReference service_providers =
+  CollectionReference serviceProviders =
       FirebaseFirestore.instance.collection('service-providers');
 
-  QuerySnapshot querySnapshot = await service_providers.get();
+  QuerySnapshot querySnapshot = await serviceProviders.get();
 
-  final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+  List<dynamic> allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-  return allData;
+  double userLat = userLocation.latitude;
+  double userLng = userLocation.longitude;
+  String spId = '';
+
+  allData.forEach((item) {
+    if (item['skill'] == skill) {
+      double spLat = item['location'].latitude;
+      double spLng = item['location'].longitude;
+      double distance = calculateDistance(userLat, userLng, spLat, spLng);
+      if (distance < 20) {
+        spId = item['uid'];
+      }
+    }
+  });
+
+  return spId;
 }
