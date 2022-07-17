@@ -32,8 +32,8 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
-  List<dynamic> serviceProviders;
   RequestsRecord requestDocument;
+  String serviceProviders;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
 
@@ -187,6 +187,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                         .set(destinationCreateData);
                                     serviceProviders = await actions.getSP(
                                       currentUserDocument?.location,
+                                      widget.skillType,
                                     );
                                     serviceProviders.forEach((element) {
                                       print(element['uid']);
