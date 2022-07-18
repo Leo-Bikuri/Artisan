@@ -6,7 +6,6 @@ import 'job_record.dart';
 import 'requests_record.dart';
 import 'service_providers_record.dart';
 import 'destination_record.dart';
-import 'distance_record.dart';
 import 'position_record.dart';
 
 import 'index.dart';
@@ -25,7 +24,6 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   RequestsRecord,
   ServiceProvidersRecord,
   DestinationRecord,
-  DistanceRecord,
   PositionRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()

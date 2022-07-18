@@ -24,12 +24,16 @@ abstract class RequestsRecord
   String get username;
 
   @nullable
+  double get distance;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(RequestsRecordBuilder builder) => builder
     ..status = ''
-    ..username = '';
+    ..username = ''
+    ..distance = 0.0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('requests');
@@ -57,6 +61,7 @@ Map<String, dynamic> createRequestsRecordData({
   DocumentReference userId,
   String status,
   String username,
+  double distance,
 }) =>
     serializers.toFirestore(
         RequestsRecord.serializer,
@@ -64,4 +69,5 @@ Map<String, dynamic> createRequestsRecordData({
           ..spId = spId
           ..userId = userId
           ..status = status
-          ..username = username));
+          ..username = username
+          ..distance = distance));

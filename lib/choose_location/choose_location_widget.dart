@@ -31,12 +31,12 @@ class ChooseLocationWidget extends StatefulWidget {
 }
 
 class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
-  DocumentReference serviceProvider;
+  DocumentReference spRef;
   RequestsRecord requestDocument;
+  LatLng location;
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
-  ServiceProvidersRecord serviceProviderDocument;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
 
@@ -188,24 +188,31 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                     await DestinationRecord.createDoc(
                                             requestDocument.reference)
                                         .set(destinationCreateData);
-                                    serviceProvider = await actions.getSP(
-                                      currentUserDocument?.location,
+                                    spRef = await actions.getSP(
+                                      placePickerValue.latLng,
                                       widget.skillType,
+                                    );
+                                    location = await actions
+                                        .getServiceProviderLocation(
+                                      spRef,
                                     );
 
                                     final requestsUpdateData =
                                         createRequestsRecordData(
-                                      spId: serviceProvider,
+                                      spId: spRef,
+                                      distance: functions
+                                          .getDistance(
+                                              placePickerValue.latLng, location)
+                                          .toDouble(),
                                     );
                                     await requestDocument.reference
                                         .update(requestsUpdateData);
                                     triggerPushNotification(
-                                      notificationTitle: 'Job request',
+                                      notificationTitle: 'Job Request',
                                       notificationText:
                                           functions.notificationText(
                                               currentUserDisplayName),
-                                      notificationSound: 'default',
-                                      userRefs: [serviceProvider],
+                                      userRefs: [currentUserReference],
                                       initialPageName: 'home',
                                       parameterData: {},
                                     );

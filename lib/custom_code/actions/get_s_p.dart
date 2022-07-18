@@ -13,7 +13,8 @@ Future<DocumentReference> getSP(
   String skill,
 ) async {
   // Add your function code here!
-  CollectionReference serviceProviders = ServiceProvidersRecord.collection;
+  CollectionReference serviceProviders =
+      FirebaseFirestore.instance.collection('servie-providers');
   DocumentReference ServiceProviderRecordReference;
   QuerySnapshot querySnapshot = await serviceProviders.get();
 
@@ -28,8 +29,7 @@ Future<DocumentReference> getSP(
       double distance = calculateDistance(userLat, userLng, spLat, spLng);
       DocumentReference reference;
       if (distance > 1) {
-        reference =
-            await ServiceProvidersRecord.collection.doc(allData[i]['uid']);
+        reference = await serviceProviders.doc(allData[i]['uid']);
       }
       ServiceProviderRecordReference = reference;
     }
