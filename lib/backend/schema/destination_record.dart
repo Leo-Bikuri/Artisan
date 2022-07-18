@@ -38,7 +38,7 @@ abstract class DestinationRecord
       .snapshots()
       .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
 
-  static Future<DestinationRecord> getDocumentOnce(DocumentReference ref) => ref
+  static Future<DestinationRecord>(DocumentReference ref) => ref
       .get()
       .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
 
