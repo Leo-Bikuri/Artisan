@@ -10,4 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 Future<LatLng> getServiceProviderLocation(DocumentReference spRef) async {
   // Add your function code here!
+  ServiceProvidersRecord serviceProviderDocument;
+  serviceProviderDocument = await ServiceProvidersRecord.getDocumentOnce(spRef);
+  return serviceProviderDocument?.location;
 }

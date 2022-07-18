@@ -6,16 +6,16 @@ import 'index.dart'; // Imports other custom actions
 import '../../flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom action code
+
 import 'package:firebase_core/firebase_core.dart';
 
-Future<DocumentReference> getSP(
+Future<List<DocumentReference>> getSP(
   LatLng userLocation,
   String skill,
 ) async {
   // Add your function code here!
-  CollectionReference serviceProviders =
-      FirebaseFirestore.instance.collection('servie-providers');
-  DocumentReference ServiceProviderRecordReference;
+  CollectionReference serviceProviders = ServiceProvidersRecord.collection;
+  List<DocumentReference> ServiceProviderRecordReference;
   QuerySnapshot querySnapshot = await serviceProviders.get();
 
   List<dynamic> allData = querySnapshot.docs.map((doc) => doc.data()).toList();
@@ -29,9 +29,10 @@ Future<DocumentReference> getSP(
       double distance = calculateDistance(userLat, userLng, spLat, spLng);
       DocumentReference reference;
       if (distance > 1) {
-        reference = await serviceProviders.doc(allData[i]['uid']);
+        reference =
+            await ServiceProvidersRecord.collection.doc(allData[i]['uid']);
       }
-      ServiceProviderRecordReference = reference;
+      ServiceProviderRecordReference.add(reference);
     }
   }
   return ServiceProviderRecordReference;

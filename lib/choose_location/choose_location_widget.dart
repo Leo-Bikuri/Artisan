@@ -31,7 +31,7 @@ class ChooseLocationWidget extends StatefulWidget {
 }
 
 class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
-  DocumentReference spRef;
+  List<DocumentReference> spRef;
   RequestsRecord requestDocument;
   LatLng location;
   LatLng googleMapsCenter;
@@ -213,8 +213,8 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       notificationText:
                                           functions.notificationText(
                                               currentUserDisplayName),
-                                      userRefs: [currentUserReference],
-                                      initialPageName: 'home',
+                                      userRefs: [spRef],
+                                      initialPageName: 'home2',
                                       parameterData: {},
                                     );
 
