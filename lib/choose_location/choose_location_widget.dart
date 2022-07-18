@@ -206,7 +206,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                               currentUserDisplayName),
                                       notificationSound: 'default',
                                       userRefs: [serviceProvider],
-                                      initialPageName: 'home',
+                                      initialPageName: 'home2',
                                       parameterData: {},
                                     );
 
