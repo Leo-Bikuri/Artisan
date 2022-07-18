@@ -70,3 +70,8 @@ int getDistance(
 
   return distance.round();
 }
+
+DocumentReference getServiceProvider(List<DocumentReference> sp) {
+  // Add your function code here!
+  return sp[0];
+}

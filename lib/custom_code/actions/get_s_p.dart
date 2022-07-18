@@ -14,7 +14,8 @@ Future<List<DocumentReference>> getSP(
   String skill,
 ) async {
   // Add your function code here!
-  CollectionReference serviceProviders = ServiceProvidersRecord.collection;
+  CollectionReference serviceProviders =
+      FirebaseFirestore.instance.collection('servie-providers');
   List<DocumentReference> ServiceProviderRecordReference;
   QuerySnapshot querySnapshot = await serviceProviders.get();
 

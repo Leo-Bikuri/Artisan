@@ -31,13 +31,12 @@ class ChooseLocationWidget extends StatefulWidget {
 }
 
 class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
-  List<DocumentReference> spRef;
-  RequestsRecord requestDocument;
-  LatLng location;
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
-  ServiceProvidersRecord serviceProviderDocument;
+  LatLng location;
+  List<DocumentReference> spRef;
+  RequestsRecord requestDocument;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
 
@@ -86,7 +85,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                         markerColor: GoogleMarkerColor.rose,
                         mapType: MapType.normal,
                         style: GoogleMapStyle.standard,
-                        initialZoom: 8,
+                        initialZoom: 14,
                         allowInteraction: true,
                         allowZoom: true,
                         showZoomControls: false,
@@ -170,7 +169,6 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                     final requestsCreateData =
                                         createRequestsRecordData(
                                       userId: currentUserReference,
-                                      status: 'Pending',
                                     );
                                     var requestsRecordReference =
                                         RequestsRecord.collection.doc();
@@ -195,12 +193,14 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                     );
                                     location = await actions
                                         .getServiceProviderLocation(
-                                      spRef,
+                                      functions
+                                          .getServiceProvider(spRef.toList()),
                                     );
 
                                     final requestsUpdateData =
                                         createRequestsRecordData(
-                                      spId: spRef,
+                                      spId: functions
+                                          .getServiceProvider(spRef.toList()),
                                       distance: functions
                                           .getDistance(
                                               placePickerValue.latLng, location)
@@ -213,7 +213,10 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       notificationText:
                                           functions.notificationText(
                                               currentUserDisplayName),
-                                      userRefs: [spRef],
+                                      userRefs: [
+                                        functions
+                                            .getServiceProvider(spRef.toList())
+                                      ],
                                       initialPageName: 'home2',
                                       parameterData: {},
                                     );
