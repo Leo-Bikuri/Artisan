@@ -169,7 +169,6 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                     final requestsCreateData =
                                         createRequestsRecordData(
                                       userId: currentUserReference,
-                                      status: 'Pending',
                                     );
                                     var requestsRecordReference =
                                         RequestsRecord.collection.doc();
@@ -217,6 +216,10 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       userRefs: [currentUserReference],
                                       initialPageName: 'home',
                                       parameterData: {},
+                                    );
+                                    await actions.assignSp(
+                                      spRef.toList(),
+                                      requestDocument.reference,
                                     );
 
                                     setState(() {});
