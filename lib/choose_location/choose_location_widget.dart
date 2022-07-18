@@ -36,7 +36,6 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
-  RequestsRecord requestDocument;
   ServiceProvidersRecord serviceProviderDocument;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
@@ -206,7 +205,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                           functions.notificationText(
                                               currentUserDisplayName),
                                       notificationSound: 'default',
-                                      userRefs: [serviceProviders],
+                                      userRefs: [serviceProvider],
                                       initialPageName: 'home',
                                       parameterData: {},
                                     );
