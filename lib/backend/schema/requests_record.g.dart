@@ -51,6 +51,13 @@ class _$RequestsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.distance;
+    if (value != null) {
+      result
+        ..add('distance')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
     value = object.reference;
     if (value != null) {
       result
@@ -94,6 +101,10 @@ class _$RequestsRecordSerializer
           result.username = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'distance':
+          result.distance = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
         case 'Document__Reference__Field':
           result.reference = serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -117,13 +128,20 @@ class _$RequestsRecord extends RequestsRecord {
   @override
   final String username;
   @override
+  final double distance;
+  @override
   final DocumentReference<Object> reference;
 
   factory _$RequestsRecord([void Function(RequestsRecordBuilder) updates]) =>
-      (new RequestsRecordBuilder()..update(updates))._build();
+      (new RequestsRecordBuilder()..update(updates)).build();
 
   _$RequestsRecord._(
-      {this.spId, this.userId, this.status, this.username, this.reference})
+      {this.spId,
+      this.userId,
+      this.status,
+      this.username,
+      this.distance,
+      this.reference})
       : super._();
 
   @override
@@ -142,24 +160,30 @@ class _$RequestsRecord extends RequestsRecord {
         userId == other.userId &&
         status == other.status &&
         username == other.username &&
+        distance == other.distance &&
         reference == other.reference;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, spId.hashCode), userId.hashCode), status.hashCode),
-            username.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, spId.hashCode), userId.hashCode),
+                    status.hashCode),
+                username.hashCode),
+            distance.hashCode),
         reference.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'RequestsRecord')
+    return (newBuiltValueToStringHelper('RequestsRecord')
           ..add('spId', spId)
           ..add('userId', userId)
           ..add('status', status)
           ..add('username', username)
+          ..add('distance', distance)
           ..add('reference', reference))
         .toString();
   }
@@ -185,6 +209,10 @@ class RequestsRecordBuilder
   String get username => _$this._username;
   set username(String username) => _$this._username = username;
 
+  double _distance;
+  double get distance => _$this._distance;
+  set distance(double distance) => _$this._distance = distance;
+
   DocumentReference<Object> _reference;
   DocumentReference<Object> get reference => _$this._reference;
   set reference(DocumentReference<Object> reference) =>
@@ -201,6 +229,7 @@ class RequestsRecordBuilder
       _userId = $v.userId;
       _status = $v.status;
       _username = $v.username;
+      _distance = $v.distance;
       _reference = $v.reference;
       _$v = null;
     }
@@ -219,19 +248,18 @@ class RequestsRecordBuilder
   }
 
   @override
-  RequestsRecord build() => _build();
-
-  _$RequestsRecord _build() {
+  _$RequestsRecord build() {
     final _$result = _$v ??
         new _$RequestsRecord._(
             spId: spId,
             userId: userId,
             status: status,
             username: username,
+            distance: distance,
             reference: reference);
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

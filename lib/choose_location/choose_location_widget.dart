@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../backend/push_notifications/push_notifications_util.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_place_picker.dart';
@@ -10,8 +9,6 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/lat_lng.dart';
 import '../flutter_flow/place.dart';
 import 'dart:io';
-import '../custom_code/actions/index.dart' as actions;
-import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,13 +28,10 @@ class ChooseLocationWidget extends StatefulWidget {
 }
 
 class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
-  DocumentReference serviceProvider;
-  RequestsRecord requestDocument;
   LatLng googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
   var placePickerValue = FFPlace();
   RequestsRecord requestDocument;
-  ServiceProvidersRecord serviceProviderDocument;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng currentUserLocationValue;
 
@@ -189,27 +183,6 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                     await DestinationRecord.createDoc(
                                             requestDocument.reference)
                                         .set(destinationCreateData);
-                                    serviceProvider = await actions.getSP(
-                                      currentUserDocument?.location,
-                                      widget.skillType,
-                                    );
-
-                                    final requestsUpdateData =
-                                        createRequestsRecordData(
-                                      spId: serviceProvider,
-                                    );
-                                    await requestDocument.reference
-                                        .update(requestsUpdateData);
-                                    triggerPushNotification(
-                                      notificationTitle: 'Job request',
-                                      notificationText:
-                                          functions.notificationText(
-                                              currentUserDisplayName),
-                                      notificationSound: 'default',
-                                      userRefs: [serviceProviders],
-                                      initialPageName: 'home',
-                                      parameterData: {},
-                                    );
 
                                     setState(() {});
                                   },
