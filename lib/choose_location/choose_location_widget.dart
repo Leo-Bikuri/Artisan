@@ -220,6 +220,10 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       initialPageName: 'home2',
                                       parameterData: {},
                                     );
+                                    await actions.assignSp(
+                                      spRef.toList(),
+                                      requestDocument.reference,
+                                    );
 
                                     setState(() {});
                                   },
