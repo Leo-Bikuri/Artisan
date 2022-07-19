@@ -312,7 +312,11 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                               );
                                                               _shouldSetState =
                                                                   true;
-
+                                                              print(containerServiceProvidersRecord
+                                                                  .reference);
+                                                              providers.remove(
+                                                                  containerServiceProvidersRecord
+                                                                      .reference);
                                                               final requestsUpdateData =
                                                                   {
                                                                 ...createRequestsRecordData(
