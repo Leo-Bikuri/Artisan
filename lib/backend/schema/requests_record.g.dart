@@ -58,6 +58,15 @@ class _$RequestsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
+    value = object.declines;
+    if (value != null) {
+      result
+        ..add('declines')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType(DocumentReference, const [const FullType(Object)])
+            ])));
+    }
     value = object.reference;
     if (value != null) {
       result
@@ -105,6 +114,13 @@ class _$RequestsRecordSerializer
           result.distance = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
+        case 'declines':
+          result.declines.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(
+                    DocumentReference, const [const FullType(Object)])
+              ])) as BuiltList<Object>);
+          break;
         case 'Document__Reference__Field':
           result.reference = serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -130,6 +146,8 @@ class _$RequestsRecord extends RequestsRecord {
   @override
   final double distance;
   @override
+  final BuiltList<DocumentReference<Object>> declines;
+  @override
   final DocumentReference<Object> reference;
 
   factory _$RequestsRecord([void Function(RequestsRecordBuilder) updates]) =>
@@ -141,6 +159,7 @@ class _$RequestsRecord extends RequestsRecord {
       this.status,
       this.username,
       this.distance,
+      this.declines,
       this.reference})
       : super._();
 
@@ -161,6 +180,7 @@ class _$RequestsRecord extends RequestsRecord {
         status == other.status &&
         username == other.username &&
         distance == other.distance &&
+        declines == other.declines &&
         reference == other.reference;
   }
 
@@ -169,10 +189,12 @@ class _$RequestsRecord extends RequestsRecord {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, spId.hashCode), userId.hashCode),
-                    status.hashCode),
-                username.hashCode),
-            distance.hashCode),
+                $jc(
+                    $jc($jc($jc(0, spId.hashCode), userId.hashCode),
+                        status.hashCode),
+                    username.hashCode),
+                distance.hashCode),
+            declines.hashCode),
         reference.hashCode));
   }
 
@@ -184,6 +206,7 @@ class _$RequestsRecord extends RequestsRecord {
           ..add('status', status)
           ..add('username', username)
           ..add('distance', distance)
+          ..add('declines', declines)
           ..add('reference', reference))
         .toString();
   }
@@ -213,6 +236,12 @@ class RequestsRecordBuilder
   double get distance => _$this._distance;
   set distance(double distance) => _$this._distance = distance;
 
+  ListBuilder<DocumentReference<Object>> _declines;
+  ListBuilder<DocumentReference<Object>> get declines =>
+      _$this._declines ??= new ListBuilder<DocumentReference<Object>>();
+  set declines(ListBuilder<DocumentReference<Object>> declines) =>
+      _$this._declines = declines;
+
   DocumentReference<Object> _reference;
   DocumentReference<Object> get reference => _$this._reference;
   set reference(DocumentReference<Object> reference) =>
@@ -230,6 +259,7 @@ class RequestsRecordBuilder
       _status = $v.status;
       _username = $v.username;
       _distance = $v.distance;
+      _declines = $v.declines?.toBuilder();
       _reference = $v.reference;
       _$v = null;
     }
@@ -248,17 +278,29 @@ class RequestsRecordBuilder
   }
 
   @override
-  RequestsRecord build() => _build();
-
-  _$RequestsRecord _build() {
-    final _$result = _$v ??
-        new _$RequestsRecord._(
-            spId: spId,
-            userId: userId,
-            status: status,
-            username: username,
-            distance: distance,
-            reference: reference);
+  _$RequestsRecord build() {
+    _$RequestsRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$RequestsRecord._(
+              spId: spId,
+              userId: userId,
+              status: status,
+              username: username,
+              distance: distance,
+              declines: _declines?.build(),
+              reference: reference);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'declines';
+        _declines?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'RequestsRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

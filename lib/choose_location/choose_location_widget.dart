@@ -205,6 +205,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                           .getDistance(
                                               placePickerValue.latLng, location)
                                           .toDouble(),
+                                      status: 'pending',
                                     );
                                     await requestDocument.reference
                                         .update(requestsUpdateData);

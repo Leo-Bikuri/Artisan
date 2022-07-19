@@ -27,13 +27,17 @@ abstract class RequestsRecord
   double get distance;
 
   @nullable
+  BuiltList<DocumentReference> get declines;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(RequestsRecordBuilder builder) => builder
     ..status = ''
     ..username = ''
-    ..distance = 0.0;
+    ..distance = 0.0
+    ..declines = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('requests');
@@ -70,4 +74,5 @@ Map<String, dynamic> createRequestsRecordData({
           ..userId = userId
           ..status = status
           ..username = username
-          ..distance = distance));
+          ..distance = distance
+          ..declines = null));

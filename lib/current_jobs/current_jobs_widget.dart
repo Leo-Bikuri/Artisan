@@ -289,6 +289,10 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .tertiaryColor,
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
                                                               ),
                                                         ),
                                                         if ((listViewRequestsRecord
@@ -306,17 +310,25 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                               );
 
                                                               final requestsUpdateData =
-                                                                  createRequestsRecordData(
-                                                                spId: functions.getServiceProvider(functions
-                                                                    .getServiceProvider2(
-                                                                        providers
-                                                                            .toList(),
-                                                                        containerServiceProvidersRecord
-                                                                            .reference)
-                                                                    .toList()),
-                                                                status:
-                                                                    'pending',
-                                                              );
+                                                                  {
+                                                                ...createRequestsRecordData(
+                                                                  spId: functions.getServiceProvider(functions
+                                                                      .getServiceProvider2(
+                                                                          providers
+                                                                              .toList(),
+                                                                          containerServiceProvidersRecord
+                                                                              .reference)
+                                                                      .toList()),
+                                                                  status:
+                                                                      'pending',
+                                                                ),
+                                                                'declines':
+                                                                    FieldValue
+                                                                        .arrayUnion([
+                                                                  containerServiceProvidersRecord
+                                                                      .reference
+                                                                ]),
+                                                              };
                                                               await listViewRequestsRecord
                                                                   .reference
                                                                   .update(
