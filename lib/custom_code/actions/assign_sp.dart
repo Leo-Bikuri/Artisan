@@ -10,44 +10,35 @@ import 'package:firebase_core/firebase_core.dart';
 import '../../backend/push_notifications/push_notifications_util.dart';
 import '../../auth/auth_util.dart';
 
-Future assignSp(
-  List<DocumentReference> serviceProviders,
+Future<String> assignSp(
+  List<DocumentReference> spRef,
   DocumentReference requestReference,
+  DocumentSnapshot<Object> querySnapshot,
+  dynamic listener,
 ) async {
-  // Add your function code here!
-
-  // final reference =
-  //     ServiceProvidersRecord.collection.doc(requestReference.toString());
-  var listener;
-  String outcome;
-  listener = requestReference.snapshots().listen((querySnapshot) {
-    // Do something with change
-    if (serviceProviders.isEmpty) {
-      outcome = "No service provider";
+  if (!spRef.isEmpty) {
+    listener.cancel();
+    return "No service provider found";
+  }
+  final data = querySnapshot.data() as Map<String, dynamic>;
+  if (data['status'] != null) {
+    if (data['status'] == "accepted") {
       listener.cancel();
+      return "Service provider found";
     }
-    final data = querySnapshot.data() as Map<String, dynamic>;
-    if (data['status'] != null) {
-      if (data['status'] == "accepted") {
-        outcome = "Service provider";
-        listener.cancel();
-      }
-    }
-    serviceProviders.removeAt(0);
-    print(serviceProviders[0]);
-    final requestsUpdateData = createRequestsRecordData(
-      spId: serviceProviders[0],
-    );
-    requestReference.update(requestsUpdateData);
-    triggerPushNotification(
-      notificationTitle: 'Job Request',
-      notificationText: notificationText(currentUserDisplayName),
-      userRefs: [getServiceProvider(serviceProviders.toList())],
-      initialPageName: 'home2',
-      parameterData: {},
-    );
-    //trigger push notification
-    //updatedocument
-  });
-  return outcome;
+  }
+  spRef.isEmpty ? '' : spRef.removeAt(0);
+  print(spRef[0]);
+  final requestsUpdateData = createRequestsRecordData(
+    spId: spRef[0],
+    status: "re-assigning",
+  );
+  requestReference.update(requestsUpdateData);
+  triggerPushNotification(
+    notificationTitle: 'Job Request',
+    notificationText: notificationText(currentUserDisplayName),
+    userRefs: [spRef[0]],
+    initialPageName: 'home2',
+    parameterData: {},
+  );
 }
