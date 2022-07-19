@@ -73,5 +73,18 @@ int getDistance(
 
 DocumentReference getServiceProvider(List<DocumentReference> sp) {
   // Add your function code here!
-  return sp[0];
+  sp.removeAt(0);
+  if (sp.isNotEmpty) {
+    return sp[0];
+  }
+  return null;
+}
+
+List<DocumentReference> getServiceProvider2(
+  List<DocumentReference> sp,
+  DocumentReference docreference,
+) {
+  sp.remove(docreference);
+  return sp;
+  // Add your function code here!
 }

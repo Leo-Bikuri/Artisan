@@ -96,7 +96,13 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         skillType: getParameter(data, 'skillType'),
         defaultLocation: getParameter(data, 'defaultLocation'),
       ),
-  'currentJobs': (data) async => NavBarPage(initialPage: 'currentJobs'),
+  'currentJobs': (data) async =>
+      hasMatchingParameters(data, {'userLocation', 'skill'})
+          ? CurrentJobsWidget(
+              userLocation: getParameter(data, 'userLocation'),
+              skill: getParameter(data, 'skill'),
+            )
+          : NavBarPage(initialPage: 'currentJobs'),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>
