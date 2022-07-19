@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
+import '../current_jobs/current_jobs_widget.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_place_picker.dart';
@@ -216,10 +217,18 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       initialPageName: 'home2',
                                       parameterData: {},
                                     );
-                                    print(spRef);
-                                    await actions.assignSp(
-                                      spRef.toList(),
-                                      requestDocument.reference,
+                                    await Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType.bottomToTop,
+                                        duration: Duration(milliseconds: 300),
+                                        reverseDuration:
+                                            Duration(milliseconds: 300),
+                                        child: CurrentJobsWidget(
+                                          skill: widget.skillType,
+                                          userLocation: placePickerValue.latLng,
+                                        ),
+                                      ),
                                     );
 
                                     setState(() {});
