@@ -350,7 +350,11 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                       );
                                                                       _shouldSetState =
                                                                           true;
-
+                                                                      print(containerServiceProvidersRecord
+                                                                          .reference);
+                                                                      providers.remove(
+                                                                          containerServiceProvidersRecord
+                                                                              .reference);
                                                                       final requestsUpdateData =
                                                                           {
                                                                         ...createRequestsRecordData(
@@ -381,7 +385,7 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                           notificationSound:
                                                                               'default',
                                                                           userRefs: [
-                                                                            currentUserReference
+                                                                            functions.getServiceProvider(functions.getServiceProvider2(providers.toList(), containerServiceProvidersRecord.reference, listViewRequestsRecord).toList()),
                                                                           ],
                                                                           initialPageName:
                                                                               'home',

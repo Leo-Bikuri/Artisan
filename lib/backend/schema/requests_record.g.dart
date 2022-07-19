@@ -151,7 +151,7 @@ class _$RequestsRecord extends RequestsRecord {
   final DocumentReference<Object> reference;
 
   factory _$RequestsRecord([void Function(RequestsRecordBuilder) updates]) =>
-      (new RequestsRecordBuilder()..update(updates)).build();
+      (new RequestsRecordBuilder()..update(updates))._build();
 
   _$RequestsRecord._(
       {this.spId,
@@ -278,7 +278,9 @@ class RequestsRecordBuilder
   }
 
   @override
-  _$RequestsRecord build() {
+  RequestsRecord build() => _build();
+
+  _$RequestsRecord _build() {
     _$RequestsRecord _$result;
     try {
       _$result = _$v ??
@@ -297,7 +299,7 @@ class RequestsRecordBuilder
         _declines?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'RequestsRecord', _$failedField, e.toString());
+            r'RequestsRecord', _$failedField, e.toString());
       }
       rethrow;
     }
