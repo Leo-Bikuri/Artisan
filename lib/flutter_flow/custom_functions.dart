@@ -73,7 +73,7 @@ int getDistance(
 
 DocumentReference getServiceProvider(List<DocumentReference> sp) {
   // Add your function code here!
-  return sp[0];
+  return sp.isNotEmpty ? sp[0] : null;
 }
 
 List<DocumentReference> getServiceProvider2(
@@ -81,15 +81,9 @@ List<DocumentReference> getServiceProvider2(
   DocumentReference docreference,
   RequestsRecord request,
 ) {
-<<<<<<< HEAD
-  sp.remove(docreference);
-  print(sp);
-  return sp;
-=======
   request.declines.forEach((item) {
-    sp.remove(item);
+    sp.isNotEmpty ? sp.remove(item) : null;
   });
-  return sp.isNotEmpty ? sp : null;
->>>>>>> origin/flutterflow
+  return sp;
   // Add your function code here!
 }

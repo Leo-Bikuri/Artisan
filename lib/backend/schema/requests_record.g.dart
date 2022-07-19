@@ -151,7 +151,7 @@ class _$RequestsRecord extends RequestsRecord {
   final DocumentReference<Object> reference;
 
   factory _$RequestsRecord([void Function(RequestsRecordBuilder) updates]) =>
-      (new RequestsRecordBuilder()..update(updates))._build();
+      (new RequestsRecordBuilder()..update(updates)).build();
 
   _$RequestsRecord._(
       {this.spId,

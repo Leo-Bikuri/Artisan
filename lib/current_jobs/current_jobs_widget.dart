@@ -349,8 +349,9 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                           providers
                                                                               .toList(),
                                                                           containerServiceProvidersRecord
-                                                                              .reference)
-                                                                      .toList())
+                                                                              .reference,
+                                                                          listViewRequestsRecord)
+                                                                      .toList()),
                                                                 ],
                                                                 initialPageName:
                                                                     'home',
