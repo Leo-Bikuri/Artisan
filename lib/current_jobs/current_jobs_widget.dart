@@ -301,6 +301,8 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                           FFButtonWidget(
                                                             onPressed:
                                                                 () async {
+                                                              var _shouldSetState =
+                                                                  false;
                                                               providers =
                                                                   await actions
                                                                       .getSP(
@@ -308,6 +310,8 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                     .userLocation,
                                                                 widget.skill,
                                                               );
+                                                              _shouldSetState =
+                                                                  true;
 
                                                               final requestsUpdateData =
                                                                   {
@@ -334,53 +338,84 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                   .reference
                                                                   .update(
                                                                       requestsUpdateData);
-                                                              triggerPushNotification(
-                                                                notificationTitle:
-                                                                    'Job Request',
-                                                                notificationText:
-                                                                    functions
-                                                                        .notificationText(
-                                                                            currentUserDisplayName),
-                                                                notificationSound:
-                                                                    'default',
-                                                                userRefs: [
-                                                                  functions.getServiceProvider(functions
-                                                                      .getServiceProvider2(
-                                                                          providers
-                                                                              .toList(),
-                                                                          containerServiceProvidersRecord
-                                                                              .reference,
-                                                                          listViewRequestsRecord)
-                                                                      .toList()),
-                                                                ],
-                                                                initialPageName:
-                                                                    'home',
-                                                                parameterData: {},
-                                                              );
-                                                              await showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (alertDialogContext) {
-                                                                  return AlertDialog(
-                                                                    title: Text(
-                                                                        'Success'),
-                                                                    content: Text(
-                                                                        'Request sent'),
-                                                                    actions: [
-                                                                      TextButton(
-                                                                        onPressed:
-                                                                            () =>
-                                                                                Navigator.pop(alertDialogContext),
-                                                                        child: Text(
-                                                                            'Ok'),
-                                                                      ),
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
+                                                              if ((listViewRequestsRecord
+                                                                      .spId !=
+                                                                  null)) {
+                                                                triggerPushNotification(
+                                                                  notificationTitle:
+                                                                      'Job Request',
+                                                                  notificationText:
+                                                                      functions
+                                                                          .notificationText(
+                                                                              currentUserDisplayName),
+                                                                  notificationSound:
+                                                                      'default',
+                                                                  userRefs: [
+                                                                    functions.getServiceProvider(functions
+                                                                        .getServiceProvider2(
+                                                                            providers.toList(),
+                                                                            containerServiceProvidersRecord.reference,
+                                                                            listViewRequestsRecord)
+                                                                        .toList()),
+                                                                  ],
+                                                                  initialPageName:
+                                                                      'home',
+                                                                  parameterData: {},
+                                                                );
+                                                                await showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (alertDialogContext) {
+                                                                    return AlertDialog(
+                                                                      title: Text(
+                                                                          'Success'),
+                                                                      content: Text(
+                                                                          'Request sent'),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                          onPressed: () =>
+                                                                              Navigator.pop(alertDialogContext),
+                                                                          child:
+                                                                              Text('Ok'),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                );
+                                                                if (_shouldSetState)
+                                                                  setState(
+                                                                      () {});
+                                                                return;
+                                                              } else {
+                                                                await showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (alertDialogContext) {
+                                                                    return AlertDialog(
+                                                                      title: Text(
+                                                                          'Fail'),
+                                                                      content: Text(
+                                                                          'All Service providers are busy'),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                          onPressed: () =>
+                                                                              Navigator.pop(alertDialogContext),
+                                                                          child:
+                                                                              Text('Ok'),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                );
+                                                              }
 
-                                                              setState(() {});
+                                                              await listViewRequestsRecord
+                                                                  .reference
+                                                                  .delete();
+                                                              if (_shouldSetState)
+                                                                setState(() {});
                                                             },
                                                             text: 'Resend',
                                                             options:
