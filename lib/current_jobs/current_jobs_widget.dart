@@ -317,7 +317,8 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                           providers
                                                                               .toList(),
                                                                           containerServiceProvidersRecord
-                                                                              .reference)
+                                                                              .reference,
+                                                                          listViewRequestsRecord)
                                                                       .toList()),
                                                                   status:
                                                                       'pending',

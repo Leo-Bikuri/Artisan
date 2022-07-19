@@ -79,9 +79,17 @@ DocumentReference getServiceProvider(List<DocumentReference> sp) {
 List<DocumentReference> getServiceProvider2(
   List<DocumentReference> sp,
   DocumentReference docreference,
+  RequestsRecord request,
 ) {
+<<<<<<< HEAD
   sp.remove(docreference);
   print(sp);
   return sp;
+=======
+  request.declines.forEach((item) {
+    sp.remove(item);
+  });
+  return sp.isNotEmpty ? sp : null;
+>>>>>>> origin/flutterflow
   // Add your function code here!
 }
