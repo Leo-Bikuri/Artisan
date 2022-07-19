@@ -7,7 +7,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SearchWidget extends StatefulWidget {
@@ -23,25 +22,13 @@ class SearchWidget extends StatefulWidget {
 }
 
 class _SearchWidgetState extends State<SearchWidget> {
-  List<SkillsRecord> algoliaSearchResults1 = [];
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  List<SkillsRecord> algoliaSearchResults2 = [];
+  List<SkillsRecord> algoliaSearchResults = [];
   TextEditingController textController;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    // On page load action.
-    SchedulerBinding.instance?.addPostFrameCallback((_) async {
-      setState(() => algoliaSearchResults1 = null);
-      await SkillsRecord.search(
-        term: widget.searchTerm,
-      )
-          .then((r) => algoliaSearchResults1 = r)
-          .onError((_, __) => algoliaSearchResults1 = [])
-          .whenComplete(() => setState(() {}));
-    });
-
     textController = TextEditingController();
   }
 
@@ -159,13 +146,13 @@ class _SearchWidgetState extends State<SearchWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  setState(() => algoliaSearchResults2 = null);
+                                  setState(() => algoliaSearchResults = null);
                                   await SkillsRecord.search(
                                     term: textController.text,
                                   )
-                                      .then((r) => algoliaSearchResults2 = r)
+                                      .then((r) => algoliaSearchResults = r)
                                       .onError(
-                                          (_, __) => algoliaSearchResults2 = [])
+                                          (_, __) => algoliaSearchResults = [])
                                       .whenComplete(() => setState(() {}));
                                 },
                                 text: 'Search',
@@ -213,7 +200,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                   ),
                   Builder(
                     builder: (context) {
-                      if (algoliaSearchResults2 == null) {
+                      if (algoliaSearchResults == null) {
                         return Center(
                           child: SizedBox(
                             width: 50,
@@ -225,7 +212,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                         );
                       }
                       final searchResults =
-                          algoliaSearchResults2?.toList() ?? [];
+                          algoliaSearchResults?.toList() ?? [];
                       return Column(
                         mainAxisSize: MainAxisSize.max,
                         children: List.generate(searchResults.length,
@@ -242,9 +229,12 @@ class _SearchWidgetState extends State<SearchWidget> {
                                 onTap: () async {
                                   await Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ChooseLocationWidget(
+                                    PageTransition(
+                                      type: PageTransitionType.bottomToTop,
+                                      duration: Duration(milliseconds: 300),
+                                      reverseDuration:
+                                          Duration(milliseconds: 300),
+                                      child: ChooseLocationWidget(
                                         skillType: '',
                                         defaultLocation:
                                             currentUserDocument?.location,
@@ -277,14 +267,29 @@ class _SearchWidgetState extends State<SearchWidget> {
                                             fit: BoxFit.cover,
                                           ),
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
-                                          child: Text(
-                                            searchResultsItem.name,
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(16, 0, 0, 0),
+                                                child: Text(
+                                                  searchResultsItem.name,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .subtitle1,
+                                                ),
+                                              ),
+                                              Text(
+                                                searchResultsItem.charge,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1,
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -298,7 +303,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                       );
                     },
                   ),
-                  if ((algoliaSearchResults2.length) == 0)
+                  if ((algoliaSearchResults.length) > 0)
                     Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [

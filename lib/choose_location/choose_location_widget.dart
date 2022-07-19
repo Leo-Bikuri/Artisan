@@ -39,28 +39,9 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   List<DocumentReference> spRef;
   RequestsRecord requestDocument;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  LatLng currentUserLocationValue;
-
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
-        .then((loc) => setState(() => currentUserLocationValue = loc));
-  }
 
   @override
   Widget build(BuildContext context) {
-    if (currentUserLocationValue == null) {
-      return Center(
-        child: SizedBox(
-          width: 50,
-          height: 50,
-          child: CircularProgressIndicator(
-            color: FlutterFlowTheme.of(context).tertiaryColor,
-          ),
-        ),
-      );
-    }
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
@@ -82,7 +63,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                         controller: googleMapsController,
                         onCameraIdle: (latLng) => googleMapsCenter = latLng,
                         initialLocation: googleMapsCenter ??=
-                            currentUserLocationValue,
+                            placePickerValue.latLng,
                         markerColor: GoogleMarkerColor.rose,
                         mapType: MapType.normal,
                         style: GoogleMapStyle.standard,
@@ -125,6 +106,9 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                             'AIzaSyDvleVM3I0xHDKgOFrqY72K9Bsie5dH4go',
                         onSelect: (place) async {
                           setState(() => placePickerValue = place);
+                          (await googleMapsController.future).animateCamera(
+                              CameraUpdate.newLatLng(
+                                  place.latLng.toGoogleMaps()));
                         },
                         defaultText: 'Click to Select Location',
                         icon: Icon(
@@ -218,7 +202,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       initialPageName: 'home2',
                                       parameterData: {},
                                     );
-                                    await Navigator.push(
+                                    await Navigator.pushAndRemoveUntil(
                                       context,
                                       PageTransition(
                                         type: PageTransitionType.bottomToTop,
@@ -230,6 +214,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                           userLocation: placePickerValue.latLng,
                                         ),
                                       ),
+                                      (r) => false,
                                     );
 
                                     setState(() {});
