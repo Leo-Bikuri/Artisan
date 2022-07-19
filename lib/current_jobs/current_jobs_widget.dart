@@ -33,9 +33,11 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<JobRecord>>(
-      stream: queryJobRecord(
-        parent: currentUserReference,
+    return StreamBuilder<List<RequestsRecord>>(
+      stream: queryRequestsRecord(
+        queryBuilder: (requestsRecord) =>
+            requestsRecord.where('userId', isEqualTo: currentUserReference),
+        singleRecord: true,
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -50,71 +52,25 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
             ),
           );
         }
-        List<JobRecord> currentJobsJobRecordList = snapshot.data;
+        List<RequestsRecord> currentJobsRequestsRecordList = snapshot.data;
+        // Return an empty Container when the document does not exist.
+        if (snapshot.data.isEmpty) {
+          return Container();
+        }
+        final currentJobsRequestsRecord =
+            currentJobsRequestsRecordList.isNotEmpty
+                ? currentJobsRequestsRecordList.first
+                : null;
         return Scaffold(
           key: scaffoldKey,
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(120),
-            child: AppBar(
-              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-              automaticallyImplyLeading: false,
-              flexibleSpace: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 8),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                          child: FlutterFlowIconButton(
-                            borderColor: Colors.transparent,
-                            borderRadius: 30,
-                            borderWidth: 1,
-                            buttonSize: 50,
-                            icon: Icon(
-                              Icons.arrow_back_rounded,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 30,
-                            ),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                          child: Text(
-                            'Back',
-                            style: FlutterFlowTheme.of(context).title1.override(
-                                  fontFamily: 'Lexend Deca',
-                                  fontSize: 16,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                      child: Text(
-                        'Current Jobs',
-                        style: FlutterFlowTheme.of(context).title1.override(
-                              fontFamily: 'Lexend Deca',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                            ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              actions: [],
-              elevation: 0,
-            ),
+          appBar: AppBar(
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            iconTheme: IconThemeData(
+                color: FlutterFlowTheme.of(context).tertiaryColor),
+            automaticallyImplyLeading: true,
+            actions: [],
+            centerTitle: true,
+            elevation: 0,
           ),
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           body: GestureDetector(
@@ -189,7 +145,7 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                             snapshot.data;
                                         return Container(
                                           width: double.infinity,
-                                          height: 100,
+                                          height: 180,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
@@ -206,244 +162,317 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    16, 8, 8, 8),
+                                                    8, 8, 8, 8),
                                             child: Row(
-                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisSize: MainAxisSize.min,
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(12, 0, 0, 0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 0, 0, 8),
-                                                        child: Text(
-                                                          containerServiceProvidersRecord
-                                                              .skill,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .title2
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Lexend Deca',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: AutoSizeText(
-                                                          'Distance ${listViewRequestsRecord.distance.toString()}km',
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Lexend Deca',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .tertiaryColor,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Row(
+                                                Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   children: [
-                                                    Column(
+                                                    Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
+                                                      children: [
+                                                        Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Text(
+                                                                  containerServiceProvidersRecord
+                                                                      .displayName,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .title1,
+                                                                ),
+                                                                FlutterFlowIconButton(
+                                                                  borderColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  borderRadius:
+                                                                      30,
+                                                                  borderWidth:
+                                                                      1,
+                                                                  buttonSize:
+                                                                      60,
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .call_rounded,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                    size: 30,
+                                                                  ),
+                                                                  onPressed:
+                                                                      () async {
+                                                                    await launchURL(
+                                                                        '+${containerServiceProvidersRecord.phoneNumber}');
+                                                                  },
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .spaceEvenly,
+                                                              .spaceBetween,
                                                       children: [
-                                                        Text(
-                                                          listViewRequestsRecord
-                                                              .status,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Lexend Deca',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .tertiaryColor,
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                        ),
-                                                        if ((listViewRequestsRecord
-                                                                .status) ==
-                                                            'declined')
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                () async {
-                                                              var _shouldSetState =
-                                                                  false;
-                                                              providers =
-                                                                  await actions
-                                                                      .getSP(
-                                                                widget
-                                                                    .userLocation,
-                                                                widget.skill,
-                                                              );
-                                                              _shouldSetState =
-                                                                  true;
-
-                                                              final requestsUpdateData =
-                                                                  {
-                                                                ...createRequestsRecordData(
-                                                                  spId: functions.getServiceProvider(functions
-                                                                      .getServiceProvider2(
-                                                                          providers
-                                                                              .toList(),
-                                                                          containerServiceProvidersRecord
-                                                                              .reference,
-                                                                          listViewRequestsRecord)
-                                                                      .toList()),
-                                                                  status:
-                                                                      'pending',
-                                                                ),
-                                                                'declines':
-                                                                    FieldValue
-                                                                        .arrayUnion([
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(12,
+                                                                      0, 6, 0),
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            0,
+                                                                            0,
+                                                                            8),
+                                                                child: Text(
                                                                   containerServiceProvidersRecord
-                                                                      .reference
-                                                                ]),
-                                                              };
-                                                              await listViewRequestsRecord
-                                                                  .reference
-                                                                  .update(
-                                                                      requestsUpdateData);
-                                                              if ((listViewRequestsRecord
-                                                                      .spId !=
-                                                                  null)) {
-                                                                triggerPushNotification(
-                                                                  notificationTitle:
-                                                                      'Job Request',
-                                                                  notificationText:
-                                                                      functions
-                                                                          .notificationText(
-                                                                              currentUserDisplayName),
-                                                                  notificationSound:
-                                                                      'default',
-                                                                  userRefs: [
-                                                                    currentUserReference
-                                                                  ],
-                                                                  initialPageName:
-                                                                      'home',
-                                                                  parameterData: {},
-                                                                );
-                                                                await showDialog(
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (alertDialogContext) {
-                                                                    return AlertDialog(
-                                                                      title: Text(
-                                                                          'Success'),
-                                                                      content: Text(
-                                                                          'Request sent'),
-                                                                      actions: [
-                                                                        TextButton(
-                                                                          onPressed: () =>
-                                                                              Navigator.pop(alertDialogContext),
-                                                                          child:
-                                                                              Text('Ok'),
-                                                                        ),
-                                                                      ],
-                                                                    );
-                                                                  },
-                                                                );
-                                                                if (_shouldSetState)
-                                                                  setState(
-                                                                      () {});
-                                                                return;
-                                                              } else {
-                                                                await showDialog(
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (alertDialogContext) {
-                                                                    return AlertDialog(
-                                                                      title: Text(
-                                                                          'Fail'),
-                                                                      content: Text(
-                                                                          'All Service providers are busy'),
-                                                                      actions: [
-                                                                        TextButton(
-                                                                          onPressed: () =>
-                                                                              Navigator.pop(alertDialogContext),
-                                                                          child:
-                                                                              Text('Ok'),
-                                                                        ),
-                                                                      ],
-                                                                    );
-                                                                  },
-                                                                );
-                                                              }
-
-                                                              await listViewRequestsRecord
-                                                                  .reference
-                                                                  .delete();
-                                                              if (_shouldSetState)
-                                                                setState(() {});
-                                                            },
-                                                            text: 'Resend',
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: 130,
-                                                              height: 40,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryColor,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
+                                                                      .skill,
+                                                                  style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .subtitle2
+                                                                      .title2
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Lexend Deca',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            20,
+                                                                            0,
+                                                                            0),
+                                                                child:
+                                                                    AutoSizeText(
+                                                                  'Distance ${listViewRequestsRecord.distance.toString()}km',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .start,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1
                                                                       .override(
                                                                         fontFamily:
                                                                             'Lexend Deca',
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .tertiaryColor,
                                                                       ),
-                                                              elevation: 2,
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .tertiaryColor,
-                                                                width: 1,
+                                                                ),
                                                               ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                            ),
+                                                            ],
                                                           ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(6,
+                                                                      0, 0, 0),
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
+                                                            children: [
+                                                              Text(
+                                                                listViewRequestsRecord
+                                                                    .status,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .title2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Lexend Deca',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                    ),
+                                                              ),
+                                                              if ((listViewRequestsRecord
+                                                                      .status) ==
+                                                                  'declined')
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          20,
+                                                                          0,
+                                                                          0),
+                                                                  child:
+                                                                      FFButtonWidget(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      var _shouldSetState =
+                                                                          false;
+                                                                      providers =
+                                                                          await actions
+                                                                              .getSP(
+                                                                        widget
+                                                                            .userLocation,
+                                                                        widget
+                                                                            .skill,
+                                                                      );
+                                                                      _shouldSetState =
+                                                                          true;
+
+                                                                      final requestsUpdateData =
+                                                                          {
+                                                                        ...createRequestsRecordData(
+                                                                          spId: functions.getServiceProvider(functions
+                                                                              .getServiceProvider2(providers.toList(), containerServiceProvidersRecord.reference, listViewRequestsRecord)
+                                                                              .toList()),
+                                                                          status:
+                                                                              'pending',
+                                                                        ),
+                                                                        'declines':
+                                                                            FieldValue.arrayUnion([
+                                                                          containerServiceProvidersRecord
+                                                                              .reference
+                                                                        ]),
+                                                                      };
+                                                                      await listViewRequestsRecord
+                                                                          .reference
+                                                                          .update(
+                                                                              requestsUpdateData);
+                                                                      if ((listViewRequestsRecord
+                                                                              .spId !=
+                                                                          null)) {
+                                                                        triggerPushNotification(
+                                                                          notificationTitle:
+                                                                              'Job Request',
+                                                                          notificationText:
+                                                                              functions.notificationText(currentUserDisplayName),
+                                                                          notificationSound:
+                                                                              'default',
+                                                                          userRefs: [
+                                                                            currentUserReference
+                                                                          ],
+                                                                          initialPageName:
+                                                                              'home',
+                                                                          parameterData: {},
+                                                                        );
+                                                                        await showDialog(
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (alertDialogContext) {
+                                                                            return AlertDialog(
+                                                                              title: Text('Success'),
+                                                                              content: Text('Request sent'),
+                                                                              actions: [
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                  child: Text('Ok'),
+                                                                                ),
+                                                                              ],
+                                                                            );
+                                                                          },
+                                                                        );
+                                                                        if (_shouldSetState)
+                                                                          setState(
+                                                                              () {});
+                                                                        return;
+                                                                      } else {
+                                                                        await showDialog(
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (alertDialogContext) {
+                                                                            return AlertDialog(
+                                                                              title: Text('Fail'),
+                                                                              content: Text('All Service providers are busy'),
+                                                                              actions: [
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                  child: Text('Ok'),
+                                                                                ),
+                                                                              ],
+                                                                            );
+                                                                          },
+                                                                        );
+                                                                      }
+
+                                                                      await listViewRequestsRecord
+                                                                          .reference
+                                                                          .delete();
+                                                                      if (_shouldSetState)
+                                                                        setState(
+                                                                            () {});
+                                                                    },
+                                                                    text:
+                                                                        'Resend',
+                                                                    options:
+                                                                        FFButtonOptions(
+                                                                      width:
+                                                                          130,
+                                                                      height:
+                                                                          40,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryColor,
+                                                                      textStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .subtitle2
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Lexend Deca',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).tertiaryColor,
+                                                                          ),
+                                                                      elevation:
+                                                                          2,
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .tertiaryColor,
+                                                                        width:
+                                                                            1,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                            ],
+                                                          ),
+                                                        ),
                                                       ],
                                                     ),
                                                   ],
@@ -460,7 +489,7 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                             );
                           },
                         ),
-                        if ((currentJobsJobRecordList.length != null))
+                        if (!(currentJobsRequestsRecord != null) ?? true)
                           Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),

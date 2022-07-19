@@ -1,11 +1,11 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../choose_location/choose_location_widget.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
+import '../components/icon1_widget.dart';
+import '../components/image_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import '../search/search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,6 +31,19 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
+        automaticallyImplyLeading: false,
+        leading: Icon1Widget(),
+        actions: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+            child: ImageWidget(),
+          ),
+        ],
+        centerTitle: true,
+        elevation: 4,
+      ),
       backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
       body: SafeArea(
         child: GestureDetector(
@@ -59,62 +72,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 10, 16, 0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30,
-                                    borderWidth: 1,
-                                    buttonSize: 44,
-                                    icon: Icon(
-                                      Icons.menu_rounded,
-                                      color: Color(0xFF101213),
-                                      size: 24,
-                                    ),
-                                    onPressed: () async {
-                                      await Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.leftToRight,
-                                          duration: Duration(milliseconds: 500),
-                                          reverseDuration:
-                                              Duration(milliseconds: 500),
-                                          child: NavBarPage(
-                                              initialPage: 'clientMenu'),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  AuthUserStreamWidget(
-                                    child: InkWell(
-                                      onTap: () async {
-                                        scaffoldKey.currentState.openDrawer();
-                                      },
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Image.network(
-                                          valueOrDefault<String>(
-                                            currentUserPhoto,
-                                            'https://www.freepik.com/free-icon/user_15486377.htm#query=default%20avatar&position=3&from_view=keyword',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
@@ -205,6 +162,20 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           4, 0, 4, 0),
                                       child: TextFormField(
                                         controller: textController,
+                                        onFieldSubmitted: (_) async {
+                                          await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                              type: PageTransitionType
+                                                  .bottomToTop,
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              reverseDuration:
+                                                  Duration(milliseconds: 300),
+                                              child: SearchWidget(),
+                                            ),
+                                          );
+                                        },
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelText: 'Skill',
@@ -255,8 +226,19 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 8, 0),
                                     child: FFButtonWidget(
-                                      onPressed: () {
-                                        print('Button pressed ...');
+                                      onPressed: () async {
+                                        await Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            type:
+                                                PageTransitionType.bottomToTop,
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            reverseDuration:
+                                                Duration(milliseconds: 300),
+                                            child: SearchWidget(),
+                                          ),
+                                        );
                                       },
                                       text: 'Search',
                                       options: FFButtonOptions(
