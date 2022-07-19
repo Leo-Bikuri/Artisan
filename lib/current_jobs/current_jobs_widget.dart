@@ -331,7 +331,13 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                 notificationSound:
                                                                     'default',
                                                                 userRefs: [
-                                                                  currentUserReference
+                                                                  functions.getServiceProvider(functions
+                                                                      .getServiceProvider2(
+                                                                          providers
+                                                                              .toList(),
+                                                                          containerServiceProvidersRecord
+                                                                              .reference)
+                                                                      .toList())
                                                                 ],
                                                                 initialPageName:
                                                                     'home',
