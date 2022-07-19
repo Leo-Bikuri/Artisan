@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
@@ -201,7 +199,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
 
                                     final requestsUpdateData =
                                         createRequestsRecordData(
-                                      spId: spRef[0],
+                                      spId: spRef.toList()[0],
                                       distance: functions
                                           .getDistance(
                                               placePickerValue.latLng, location)
@@ -214,30 +212,15 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       notificationText:
                                           functions.notificationText(
                                               currentUserDisplayName),
-                                      userRefs: [spRef[0]],
+                                      userRefs: [spRef.toList()[0]],
                                       initialPageName: 'home2',
                                       parameterData: {},
                                     );
-                                    // await actions.assignSp(
-                                    //   spRef.toList(),
-                                    //   requestDocument.reference,
-                                    // );
-                                    var listener;
-                                    String outcome;
-                                    listener = requestDocument.reference
-                                        .snapshots()
-                                        .listen((querySnapshot) {
-                                      // Do something with change
-                                      outcome = actions
-                                          .assignSp(
-                                              spRef,
-                                              requestDocument.reference,
-                                              querySnapshot,
-                                              listener)
-                                          .toString();
-                                      //trigger push notification
-                                      //updatedocument
-                                    });
+                                    print(spRef);
+                                    await actions.assignSp(
+                                      spRef.toList(),
+                                      requestDocument.reference,
+                                    );
 
                                     setState(() {});
                                   },
