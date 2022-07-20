@@ -55,13 +55,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 230,
+                  height: 170,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryColor,
                     shape: BoxShape.rectangle,
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Container(
                         width: double.infinity,
