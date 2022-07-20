@@ -358,6 +358,8 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                             true;
                                                                         print(containerServiceProvidersRecord
                                                                             .reference);
+                                                                        print(
+                                                                            providers);
                                                                         providers
                                                                             .remove(containerServiceProvidersRecord.reference);
                                                                         final requestsUpdateData =
