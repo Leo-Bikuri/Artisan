@@ -132,8 +132,8 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                         ),
                       ),
                     ),
-                    noItemsFoundIndicatorBuilder: (_) => Image.network(
-                      '',
+                    noItemsFoundIndicatorBuilder: (_) => Image.asset(
+                      'assets/images/31.png',
                     ),
                     itemBuilder: (context, _, listViewIndex) {
                       final listViewRequestsRecord =
