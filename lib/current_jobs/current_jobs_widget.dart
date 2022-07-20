@@ -28,6 +28,7 @@ class CurrentJobsWidget extends StatefulWidget {
 }
 
 class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
+  LatLng spLoc;
   List<DocumentReference> providers;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -351,8 +352,16 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                             await actions.getSP(
                                                                           widget
                                                                               .userLocation,
-                                                                          widget
+                                                                          containerServiceProvidersRecord
                                                                               .skill,
+                                                                        );
+                                                                        _shouldSetState =
+                                                                            true;
+                                                                        spLoc =
+                                                                            await actions.getServiceProviderLocation(
+                                                                          functions.getServiceProvider(functions
+                                                                              .getServiceProvider2(providers.toList(), containerServiceProvidersRecord.reference, listViewRequestsRecord)
+                                                                              .toList()),
                                                                         );
                                                                         _shouldSetState =
                                                                             true;
@@ -364,6 +373,8 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                                 functions.getServiceProvider(functions.getServiceProvider2(providers.toList(), containerServiceProvidersRecord.reference, listViewRequestsRecord).toList()),
                                                                             status:
                                                                                 'pending',
+                                                                            distance:
+                                                                                functions.getDistance(widget.userLocation, spLoc).toDouble(),
                                                                           ),
                                                                           'declines':
                                                                               FieldValue.arrayUnion([
