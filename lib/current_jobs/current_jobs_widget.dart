@@ -60,13 +60,13 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
             iconTheme: IconThemeData(
                 color: FlutterFlowTheme.of(context).tertiaryColor),
             automaticallyImplyLeading: true,
             actions: [],
             centerTitle: true,
-            elevation: 0,
+            elevation: 4,
           ),
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           body: GestureDetector(
@@ -313,7 +313,7 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                                       .min,
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
-                                                                      .center,
+                                                                      .start,
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
                                                                       .start,
