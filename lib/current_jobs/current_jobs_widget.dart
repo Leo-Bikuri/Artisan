@@ -83,9 +83,10 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                       children: [
                         StreamBuilder<List<RequestsRecord>>(
                           stream: queryRequestsRecord(
-                            queryBuilder: (requestsRecord) =>
-                                requestsRecord.where('userId',
-                                    isEqualTo: currentUserReference),
+                            queryBuilder: (requestsRecord) => requestsRecord
+                                .where('userId',
+                                    isEqualTo: currentUserReference)
+                                .where('status', isNotEqualTo: 'completed'),
                           ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
