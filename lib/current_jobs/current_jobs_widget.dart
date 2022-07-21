@@ -185,6 +185,30 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        2,
+                                                                        2,
+                                                                        2,
+                                                                        2),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          40),
+                                                              child:
+                                                                  Image.network(
+                                                                containerServiceProvidersRecord
+                                                                    .photoUrl,
+                                                                width: 40,
+                                                                height: 40,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          ),
                                                           Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
