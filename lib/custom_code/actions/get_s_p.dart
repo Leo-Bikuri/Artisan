@@ -23,7 +23,7 @@ Future<List<DocumentReference>> getSP(
   double userLat = userLocation.latitude;
   double userLng = userLocation.longitude;
   for (int i = 0; i < allData.length; i++) {
-    if (allData[i]['skill'] == skill) {
+    if (allData[i]['skill'] == skill && allData[i]['available']) {
       double spLat = allData[i]['location'].latitude;
       double spLng = allData[i]['location'].longitude;
       double distance = calculateDistance(userLat, userLng, spLat, spLng);
