@@ -28,7 +28,7 @@ Future<List<DocumentReference>> getSP(
       double spLng = allData[i]['location'].longitude;
       double distance = calculateDistance(userLat, userLng, spLat, spLng);
       DocumentReference reference;
-      if (distance > 1) {
+      if (distance < 20) {
         reference = ServiceProvidersRecord.collection.doc(allData[i]['uid']);
       }
       if (reference != null) {
