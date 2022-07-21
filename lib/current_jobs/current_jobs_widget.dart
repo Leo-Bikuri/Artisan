@@ -36,8 +36,9 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
   Widget build(BuildContext context) {
     return StreamBuilder<List<RequestsRecord>>(
       stream: queryRequestsRecord(
-        queryBuilder: (requestsRecord) =>
-            requestsRecord.where('userId', isEqualTo: currentUserReference),
+        queryBuilder: (requestsRecord) => requestsRecord
+            .where('userId', isEqualTo: currentUserReference)
+            .where('status', isEqualTo: 'pending'),
         singleRecord: true,
       ),
       builder: (context, snapshot) {

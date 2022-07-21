@@ -203,7 +203,7 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                       initialPageName: 'home',
                                       parameterData: {},
                                     );
-                                    await Navigator.pushAndRemoveUntil(
+                                    await Navigator.push(
                                       context,
                                       PageTransition(
                                         type: PageTransitionType.bottomToTop,
@@ -215,7 +215,6 @@ class _ChooseLocationWidgetState extends State<ChooseLocationWidget> {
                                           skill: widget.skillType,
                                         ),
                                       ),
-                                      (r) => false,
                                     );
 
                                     setState(() {});
