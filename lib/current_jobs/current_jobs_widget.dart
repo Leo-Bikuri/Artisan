@@ -36,8 +36,9 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
   Widget build(BuildContext context) {
     return StreamBuilder<List<RequestsRecord>>(
       stream: queryRequestsRecord(
-        queryBuilder: (requestsRecord) =>
-            requestsRecord.where('userId', isEqualTo: currentUserReference),
+        queryBuilder: (requestsRecord) => requestsRecord
+            .where('userId', isEqualTo: currentUserReference)
+            .where('status', isEqualTo: 'pending'),
         singleRecord: true,
       ),
       builder: (context, snapshot) {
@@ -83,9 +84,10 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                       children: [
                         StreamBuilder<List<RequestsRecord>>(
                           stream: queryRequestsRecord(
-                            queryBuilder: (requestsRecord) =>
-                                requestsRecord.where('userId',
-                                    isEqualTo: currentUserReference),
+                            queryBuilder: (requestsRecord) => requestsRecord
+                                .where('userId',
+                                    isEqualTo: currentUserReference)
+                                .where('status', isNotEqualTo: 'completed'),
                           ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
@@ -185,6 +187,30 @@ class _CurrentJobsWidgetState extends State<CurrentJobsWidget> {
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        2,
+                                                                        2,
+                                                                        2,
+                                                                        2),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          40),
+                                                              child:
+                                                                  Image.network(
+                                                                containerServiceProvidersRecord
+                                                                    .photoUrl,
+                                                                width: 40,
+                                                                height: 40,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          ),
                                                           Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
